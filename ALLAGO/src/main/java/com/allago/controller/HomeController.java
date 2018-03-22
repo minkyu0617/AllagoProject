@@ -1,4 +1,4 @@
-package com.bigdata.allago;
+package com.allago.controller;
 
 import java.text.DateFormat;
 import java.util.Date;

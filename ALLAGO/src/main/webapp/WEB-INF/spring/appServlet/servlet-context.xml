@@ -21,7 +21,7 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.bigdata.allago" />
+	<context:component-scan base-package="com.allago.controller" />
 	
 	
 	
