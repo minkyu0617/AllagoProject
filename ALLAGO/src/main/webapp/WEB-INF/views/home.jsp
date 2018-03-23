@@ -51,7 +51,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">ALLAGO v1.0</a>
+                <a class="navbar-brand" href="/home.jsp"><img src="/allago/resources/images/allago.png" height=50px width=50px /></a>
             </div>
             <!-- /.navbar-header -->
 
