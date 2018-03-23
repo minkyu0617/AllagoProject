@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<!-- 자바의 패키지.클래스 이름을 짧게 구성 -->
+	<typeAliases>
+		<typeAlias alias="KeyInfo" type="com.allago.dto.KeyInfo"/>
+		<typeAlias alias="KeySearch" type="com.allago.dto.KeySearch"/>
+		<typeAlias alias="StockMaster" type="com.allago.dto.StockMaster"/>
+		<typeAlias alias="StockTrend" type="com.allago.dto.StockTrend"/>
+	</typeAliases>
+
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="oracle.jdbc.OracleDriver" />
+				<property name="url" value="jdbc:oracle:thin:@210.16.214.202:1521:xe" />
+				<property name="username" value="allago" />
+				<property name="password" value="allago" />
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<mappers>
+		
+	</mappers>
+	
+</configuration>
