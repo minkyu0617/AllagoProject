@@ -16,9 +16,9 @@ public class StockService {
 	@Qualifier("stockDao")
 	private StockDao dao;
 	
-	public ArrayList<StockTrend> getStockTrend(int compCode) {
+	public ArrayList<StockTrend> getTrendByCompCode(String compCode) {
 		
-		ArrayList<StockTrend> stockTrends = new ArrayList<>();
+		ArrayList<StockTrend> stockTrends = dao.selectTrendByCompCode(compCode);
 		return stockTrends;
 	}
 }

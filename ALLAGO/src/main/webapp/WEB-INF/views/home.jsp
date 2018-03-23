@@ -39,6 +39,9 @@
 <script>
 	
 $(function() {
+	
+	var isRunning = false;
+	
 	Highcharts.chart('container', {
 	    title: {text: 'Solar Employment Growth by Sector, 2010-2016'},
 	    subtitle: {text: 'Source: thesolarfoundation.com'},
@@ -85,9 +88,32 @@ $(function() {
 	        }]
 	    }
 	});
-	    
-	$.getJSON('https://cdn.rawgit.com/highcharts/highcharts/057b672172ccc6c08fe7dbb27fc17ebca3f5b770/samples/data/usdeur.json',
-	    function (data) {
+		
+	$('a[id^=compCode]').on('click', function(event) {
+		
+		if (isRunning) {
+			alert('이전 작업 진행 중');
+			return;
+		}
+		
+		var compCode = $(this).attr('data-id');
+		
+		$.ajax({
+			url : "/allago/stock/trend.action",
+			data : {
+				"compCode" : compCode
+			},
+			method : "GET",
+			success : processResult,
+			error : function(xhr, status, err) {
+				alert('검색 실패 ' + err);
+				isRunning = false;
+			}
+		});
+		isRunning = true;
+	});
+	
+	function processResult(data, status, xhr) {
 
 	        Highcharts.chart('container2', {
 	            chart: {zoomType: 'x'},
@@ -96,7 +122,7 @@ $(function() {
 	                text: document.ontouchstart === undefined ?
 	                        'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
 	            },
-	            xAxis: {type: 'datetime'},
+	            xAxis: {type: 'marketDate'},
 	            yAxis: {title: {text: 'Exchange rate'}},
 	            legend: {enabled: false},
 	            plotOptions: {
@@ -117,36 +143,11 @@ $(function() {
 
 	            series: [{
 	                type: 'area',
-	                name: 'USD to EUR',
+	                name: 'Closing Price',
 	                data: data
 	            }]
 	        });
 	    }
-	);
-		
-	$('a[id^=compCode]').on('click', function(event) {
-		
-		if (isRunning) {
-			alert('이전 작업 진행 중');
-			return;
-		}
-		
-		var compCode = $(this).attr('data-id');
-		
-		$.ajax({
-			url : "/allago/stock/trend.action",
-			data : {
-				id : compCode
-			},
-			method : "GET",
-			success : processResult,
-			error : function(xhr, status, err) {
-				alert('검색 실패 ' + err);
-				isRunning = false;
-			}
-		});
-		isRunning = true;
-	});
 	
 });
 

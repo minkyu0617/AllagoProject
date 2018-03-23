@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 public class StockMaster {
-	int compCode;
+	String compCode;
 	String compName;
-	int sectorCode;
+	String sectorCode;
 	String sector;
 	ArrayList<StockTrend> stockTrends;
 }

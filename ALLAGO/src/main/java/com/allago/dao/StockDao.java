@@ -16,9 +16,9 @@ public class StockDao {
 	@Qualifier("stockMapper")
 	StockMapper stockMapper;
 	
-	public ArrayList<StockTrend> selectTrendByCompCode(int compCode) {
+	public ArrayList<StockTrend> selectTrendByCompCode(String compCode) {
 		
-		ArrayList<StockTrend> stockTrends = new ArrayList<>();
+		ArrayList<StockTrend> stockTrends = stockMapper.selectTrendByCompCode(compCode);
 		return stockTrends;
 	}
 }
