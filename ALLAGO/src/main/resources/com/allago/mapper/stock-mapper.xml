@@ -8,7 +8,7 @@
 	
 	<!-- 매서드 이름 -->
 	<select id="selectTrendByCompCode"
-		    parameterType="int" resultType="StockTrend">
+		    parameterType="string" resultType="StockTrend">
 		SELECT comp_code, comp_name, market_date, volume, close_price
 		FROM stock_trend
 		WHERE comp_code = #{ compCode }

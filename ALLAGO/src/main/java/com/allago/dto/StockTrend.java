@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class StockTrend {
-	int compCode;
+	String compCode;
 	String compName;
 	String marketDate;
 	int volume;
