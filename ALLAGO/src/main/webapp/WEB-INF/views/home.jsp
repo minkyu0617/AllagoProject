@@ -131,7 +131,7 @@ $(function() {
 			return;
 		}
 		
-		var compCode = ${this}.attr('data-id');
+		var compCode = $(this).attr('data-id');
 		
 		$.ajax({
 			url : "/allago/stock/trend.action",
