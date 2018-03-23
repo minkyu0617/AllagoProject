@@ -31,4 +31,12 @@
 			value="classpath:mybatis-config.xml" />
 	</bean>
 	
+	<bean id="stockMapper"
+		class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" 
+			ref="sqlSessionFactory" />
+		<property name="mapperInterface" 
+			value="com.allago.mapper.StockMapper" />
+	</bean>
+	
 </beans>

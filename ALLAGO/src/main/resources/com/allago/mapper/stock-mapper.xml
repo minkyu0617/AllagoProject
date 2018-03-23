@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 클래스 이름 -->  
+<mapper namespace="com.allago.mapper.StockMapper">
+	
+	<!-- 매서드 이름 -->
+	<select id="selectTrendByCompCode"
+		    parameterType="int" resultType="StockTrend">
+		SELECT comp_code, comp_name, market_date, volume, close_price
+		FROM stock_trend
+		WHERE comp_code = #{ compCode }
+	</select>
+	
+</mapper>
