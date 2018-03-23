@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 클래스 이름 -->  
+<mapper namespace="com.allago.mapper.StockMapper">
+	
+	<!-- 매서드 이름 -->
+	
+	<select id="selectTrendByCompCode"
+		    parameterType="compCode" resultType="StockTrend">
+		SELECT memberid, password, username, phoneno, m_address, email, usertype,
+			   m_regdate, m_deleted, blackuser
+		FROM MEMBER
+		WHERE MEMBERID = #{ memberId } AND PASSWORD = #{ password }
+	</select>
+	
+	<resultMap id="memberMap" type="Member">
+		<id column="memberid" property="memberId" />
+		<result column="username" property="userName" />
+		<result column="phoneno" property="phoneNo" />
+		<result column="m_address" property="address" />
+		<result column="email" property="email" />
+		<result column="m_regdate" property="regDate" />
+		<result column="usertype" property="userType" />
+		<result column="active" property="active" />
+		<result column="m_deleted" property="deleted" />
+		<result column="blackuser" property="blackUser" />
+	</resultMap>
+	
+	<select id="selectMembers" resultMap="memberMap">
+		SELECT memberid, username, phoneno, m_address, email, usertype
+		FROM member
+		WHERE m_deleted = '0'
+		ORDER BY usertype, memberid
+	</select>
+	
+	<select id="selectMemberById" parameterType="String" resultMap="memberMap">
+		SELECT *
+		FROM member
+		WHERE memberid = #{ id }
+	</select>
+	
+	<update id="updateMember" parameterType="Member">
+		UPDATE member 
+		SET username = #{ userName }, phoneno = #{ phoneNo }, m_address = #{ address }, 
+			email = #{ email }, usertype = #{ userType }
+		WHERE memberid = #{ memberId }
+	</update>
+	
+	<update id="deleteMemberById" parameterType="String">
+		UPDATE member
+		SET m_deleted = '1'
+		WHERE memberid = #{ id }
+	</update>
+	
+</mapper>
