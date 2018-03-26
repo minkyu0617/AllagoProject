@@ -319,73 +319,59 @@ $(function() {
 	function processResult(data, status, xhr) {
 		
 		var closePrice = [];
-		var marketDate = [];
-		
-		for (var i = 4; i < data.length; i+5) {
+		for (var i = 0; i < data.length; i++) {
 			closePrice.push(data[i].closePrice);
-			marketDate.push(data[i].marketDate);
 		}
 		
-        Highcharts.chart('container2', {
-            chart: {zoomType: 'x'},
-            title: {
-                text: '주식 동향'
-            },
-            subtitle: {
-                text: '2013년 1월 2일-2017년 12월 31일'
-            },
-            xAxis: {
-            	title: {
-            		text: 'marketDate'
-            	},
-            	categories: ['2013', '2014', '2015', '2016', '2017'],
-            	/*tickInterval: 246 */
-                minRange : 246
-            },
-            yAxis: {
-                title: {
-                    text: 'close price'
-                }
-            },
-            legend: {
-                enabled: false
-            },
-            plotOptions: {
-                area: {
-                    fillColor: {
-                        linearGradient: {
-                            x1: 0,
-                            y1: 0,
-                            x2: 0,
-                            y2: 1
-                        },
-                        stops: [
-                            [0, Highcharts.getOptions().colors[0]],
-                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                        ]
-                    },
-                    marker: {
-                        radius: 2
-                    },
-                    lineWidth: 1,
-                    states: {
-                        hover: {
-                            lineWidth: 1
-                        }
-                    },
-                    threshold: null
-                }
-            },
 
-            series: [{
-                type: 'area',
-                name: 'CLOSE PRICE',
-                data: closePrice
-            }]
-        });
+		Highcharts.chart('container2', {
+
+		    chart: {
+		        type: 'area',
+		        zoomType: 'x',
+		        panning: true,
+		        panKey: 'shift'
+		    },
+
+		    title: {
+		        text: '2017 Tour de France Stage 8: Dole - Station des Rousses'
+		    },
+
+		    subtitle: {
+		        text: 'An annotated chart in Highcharts'
+		    },
+
+		    //xAxis: {
+		    //	categories: ['2013', '2014', '2015', '2016', '2017']
+            //},
+
+            /*
+		    yAxis: {
+		    	title: {
+		            text: 'Close Price'
+		        },
+		        labels: {
+		            formatter: function () {
+		                return this.value / 1000 + 'k';
+		            }
+		        }
+		    },
+			*/
+		    legend: {
+		        enabled: false
+		    },
+
+		    series: [{
+		        data: closePrice
+		        //lineColor: Highcharts.getOptions().colors[1],
+		        //color: Highcharts.getOptions().colors[2],
+		        //fillOpacity: 0.5
+		    }]
+
+		});
+        isRunning = false;
     }
-	isRunning = false;
-    
+	
 });
 
 </script>

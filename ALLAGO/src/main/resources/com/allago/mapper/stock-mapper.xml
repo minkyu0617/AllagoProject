@@ -9,9 +9,11 @@
 	<!-- 매서드 이름 -->
 	<select id="selectTrendByCompCode"
 		    parameterType="string" resultType="StockTrend">
-		SELECT comp_code, comp_name, market_date, volume, close_price
+		SELECT comp_code as compCode, comp_name as compName, volume, 
+			   market_date as marketDate, close_price as closePrice
 		FROM stock_trend
 		WHERE comp_code = #{ compCode }
+		ORDER BY marketDate
 	</select>
 	
 </mapper>
