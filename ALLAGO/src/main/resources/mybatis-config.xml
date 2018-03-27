@@ -26,6 +26,7 @@
 	
 	<mappers>
 		<mapper resource="com/allago/mapper/stock-mapper.xml" />
+		<mapper resource="com/allago/mapper/key-mapper.xml" />
 	</mappers>
 	
 </configuration>

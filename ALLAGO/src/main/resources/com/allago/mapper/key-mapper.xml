@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 클래스 이름 -->  
+<mapper namespace="com.allago.mapper.KeyMapper">
+	
+	<!-- 매서드 이름 -->
+	<select id="selectTrendByKeyword"
+		    parameterType="string" resultType="KeyInfo">
+		SELECT key_name as keyName, key_count as keyCount, key_date as keyDate
+		FROM key_info
+		WHERE key_name = #{ keyName }
+	</select>
+	
+</mapper>
