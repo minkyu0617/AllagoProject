@@ -5,10 +5,7 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class StockTrend {
-	String compCode;
-	String compName;
+public class StockTrend2 {
 	Date marketDate;
-	int volume;
 	int closePrice;
 }
