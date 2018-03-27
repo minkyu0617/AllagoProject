@@ -36,373 +36,184 @@
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/series-label.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
-
 <script>
-	Highcharts.theme = {
-		colors : [ '#2b908f', '#90ee7e', '#f45b5b', '#7798BF', '#aaeeee',
-				'#ff0066', '#eeaaee', '#55BF3B', '#DF5353', '#7798BF',
-				'#aaeeee' ],
-		chart : {
-			backgroundColor : {
-				linearGradient : {
-					x1 : 0,
-					y1 : 0,
-					x2 : 1,
-					y2 : 1
-				},
-				stops : [ [ 0, '#2a2a2b' ], [ 1, '#3e3e40' ] ]
-			},
-			style : {
-				fontFamily : '\'Unica One\', sans-serif'
-			},
-			plotBorderColor : '#606063'
-		},
+$(function() {
+	var isRunning = false;
+
+	Highcharts.chart('container', {
 		title : {
-			style : {
-				color : '#E0E0E3',
-				textTransform : 'uppercase',
-				fontSize : '20px'
-			}
+			text : 'Solar Employment Growth by Sector, 2010-2016'
 		},
 		subtitle : {
-			style : {
-				color : '#E0E0E3',
-				textTransform : 'uppercase'
-			}
-		},
-		xAxis : {
-			gridLineColor : '#707073',
-			labels : {
-				style : {
-					color : '#E0E0E3'
-				}
-			},
-			lineColor : '#707073',
-			minorGridLineColor : '#505053',
-			tickColor : '#707073',
-			title : {
-				style : {
-					color : '#A0A0A3'
-
-				}
-			}
+			text : 'Source: thesolarfoundation.com'
 		},
 		yAxis : {
-			gridLineColor : '#707073',
-			labels : {
-				style : {
-					color : '#E0E0E3'
-				}
-			},
-			lineColor : '#707073',
-			minorGridLineColor : '#505053',
-			tickColor : '#707073',
-			tickWidth : 1,
 			title : {
-				style : {
-					color : '#A0A0A3'
-				}
-			}
-		},
-		tooltip : {
-			backgroundColor : 'rgba(0, 0, 0, 0.85)',
-			style : {
-				color : '#F0F0F0'
-			}
-		},
-		plotOptions : {
-			series : {
-				dataLabels : {
-					color : '#B0B0B3'
-				},
-				marker : {
-					lineColor : '#333'
-				}
-			},
-			boxplot : {
-				fillColor : '#505053'
-			},
-			candlestick : {
-				lineColor : 'white'
-			},
-			errorbar : {
-				color : 'white'
+				text : 'Number of Employees'
 			}
 		},
 		legend : {
-			itemStyle : {
-				color : '#E0E0E3'
-			},
-			itemHoverStyle : {
-				color : '#FFF'
-			},
-			itemHiddenStyle : {
-				color : '#606063'
-			}
+			layout : 'vertical',
+			align : 'right',
+			verticalAlign : 'middle'
 		},
-		credits : {
-			style : {
-				color : '#666'
-			}
-		},
-		labels : {
-			style : {
-				color : '#707073'
-			}
-		},
-
-		drilldown : {
-			activeAxisLabelStyle : {
-				color : '#F0F0F3'
-			},
-			activeDataLabelStyle : {
-				color : '#F0F0F3'
-			}
-		},
-
-		navigation : {
-			buttonOptions : {
-				symbolStroke : '#DDDDDD',
-				theme : {
-					fill : '#505053'
-				}
-			}
-		},
-
-		// scroll charts
-		rangeSelector : {
-			buttonTheme : {
-				fill : '#505053',
-				stroke : '#000000',
-				style : {
-					color : '#CCC'
-				},
-				states : {
-					hover : {
-						fill : '#707073',
-						stroke : '#000000',
-						style : {
-							color : 'white'
-						}
-					},
-					select : {
-						fill : '#000003',
-						stroke : '#000000',
-						style : {
-							color : 'white'
-						}
-					}
-				}
-			},
-			inputBoxBorderColor : '#505053',
-			inputStyle : {
-				backgroundColor : '#333',
-				color : 'silver'
-			},
-			labelStyle : {
-				color : 'silver'
-			}
-		},
-
-		navigator : {
-			handles : {
-				backgroundColor : '#666',
-				borderColor : '#AAA'
-			},
-			outlineColor : '#CCC',
-			maskFill : 'rgba(255,255,255,0.1)',
+		plotOptions : {
 			series : {
-				color : '#7798BF',
-				lineColor : '#A6C7ED'
-			},
-			xAxis : {
-				gridLineColor : '#505053'
+				label : {
+					connectorAllowed : false
+				},
+				pointStart : 2010
 			}
 		},
 
-		scrollbar : {
-			barBackgroundColor : '#808083',
-			barBorderColor : '#808083',
-			buttonArrowColor : '#CCC',
-			buttonBackgroundColor : '#606063',
-			buttonBorderColor : '#606063',
-			rifleColor : '#FFF',
-			trackBackgroundColor : '#404043',
-			trackBorderColor : '#404043'
-		},
+		series : [
+				{
+					name : 'Installation',
+					data : [ 43934, 52503, 57177, 69658, 97031, 119931,
+							137133, 154175 ]
+				},
+				{
+					name : 'Manufacturing',
+					data : [ 24916, 24064, 29742, 29851, 32490, 30282,
+							38121, 40434 ]
+				},
+				{
+					name : 'Sales & Distribution',
+					data : [ 11744, 17722, 16005, 19771, 20185, 24377,
+							32147, 39387 ]
+				},
+				{
+					name : 'Project Development',
+					data : [ null, null, 7988, 12169, 15112, 22452, 34400,
+							34227 ]
+				},
+				{
+					name : 'Other',
+					data : [ 12908, 5948, 8105, 11248, 8989, 11816, 18274,
+							18111 ]
+				} ],
 
-		// special colors for some of the
-		legendBackgroundColor : 'rgba(0, 0, 0, 0.5)',
-		background2 : '#505053',
-		dataLabelsColor : '#B0B0B3',
-		textColor : '#C0C0C0',
-		contrastTextColor : '#F0F0F3',
-		maskColor : 'rgba(255,255,255,0.3)'
-	};
-
-	// Apply the theme
-	Highcharts.setOptions(Highcharts.theme);
-	///////////	
-	$(function() {
-
-		var isRunning = false;
-
-		Highcharts.chart('container', {
-			title : {
-				text : 'Solar Employment Growth by Sector, 2010-2016'
-			},
-			subtitle : {
-				text : 'Source: thesolarfoundation.com'
-			},
-			yAxis : {
-				title : {
-					text : 'Number of Employees'
-				}
-			},
-			legend : {
-				layout : 'vertical',
-				align : 'right',
-				verticalAlign : 'middle'
-			},
-			plotOptions : {
-				series : {
-					label : {
-						connectorAllowed : false
-					},
-					pointStart : 2010
-				}
-			},
-
-			series : [
-					{
-						name : 'Installation',
-						data : [ 43934, 52503, 57177, 69658, 97031, 119931,
-								137133, 154175 ]
-					},
-					{
-						name : 'Manufacturing',
-						data : [ 24916, 24064, 29742, 29851, 32490, 30282,
-								38121, 40434 ]
-					},
-					{
-						name : 'Sales & Distribution',
-						data : [ 11744, 17722, 16005, 19771, 20185, 24377,
-								32147, 39387 ]
-					},
-					{
-						name : 'Project Development',
-						data : [ null, null, 7988, 12169, 15112, 22452, 34400,
-								34227 ]
-					},
-					{
-						name : 'Other',
-						data : [ 12908, 5948, 8105, 11248, 8989, 11816, 18274,
-								18111 ]
-					} ],
-
-			responsive : {
-				rules : [ {
-					condition : {
-						maxWidth : 500
-					},
-					chartOptions : {
-						legend : {
-							layout : 'horizontal',
-							align : 'center',
-							verticalAlign : 'bottom'
-						}
+		responsive : {
+			rules : [ {
+				condition : {
+					maxWidth : 500
+				},
+				chartOptions : {
+					legend : {
+						layout : 'horizontal',
+						align : 'center',
+						verticalAlign : 'bottom'
 					}
-				} ]
-			}
-		});
-
-		$('a[id^=compCode]').on('click', function(event) {
-
-			if (isRunning) {
-				alert('이전 작업 진행 중');
-				return;
-			}
-
-			var compCode = $(this).attr('data-id');
-
-			$.ajax({
-				url : "/allago/stock/trend.action",
-				data : {
-					"compCode" : compCode
-				},
-				method : "GET",
-				success : processResult,
-				error : function(xhr, status, err) {
-					alert('검색 실패 ' + err);
-					isRunning = false;
 				}
-			});
-			isRunning = true;
-		});
-
-		function processResult(data, status, xhr) {
-
-			var closePrice = [];
-			var marketDate = [];
-
-			for (var i = 4; i < data.length; i += 5) {
-				closePrice.push(data[i].closePrice);
-				marketDate.push(data[i].marketDate);
-			}
-
-			Highcharts.chart('container2', {
-				chart : {zoomType : 'x'},
-				title : {text : '주식 동향'},
-				subtitle : {text : '2013년 1월 2일-2017년 12월 31일'},
-				xAxis : {
-					title : {
-						text : 'Market Date'
-					},
-					categories : [ '2013', '2014', '2015', '2016', '2017' ],
-					/*tickInterval: 246 */
-					minRange : 246
-				},
-				yAxis : {title : {text : 'Close Price'}},
-				legend : {
-					enabled : false
-				},
-				plotOptions: {
-	                area: {
-	                    fillColor: {
-	                        linearGradient: {
-	                            x1: 0,
-	                            y1: 0,
-	                            x2: 0,
-	                            y2: 1
-	                        },
-	                        stops: [
-	                            [0, Highcharts.getOptions().colors[0]],
-	                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-	                        ]
-	                    },
-	                    marker: {
-	                        radius: 2
-	                    },
-	                    lineWidth: 1,
-	                    states: {
-	                        hover: {
-	                            lineWidth: 1
-	                        }
-	                    },
-	                    threshold: null
-	                }
-	            },
-				
-	            series : [ {
-					type : 'area',
-					name : 'CLOSE PRICE',
-					data : closePrice
-				} ]
-			});
+			} ]
 		}
-		isRunning = false;
-
 	});
+	
+	$(function(){
+		if (isRunning) {
+			alert('이전 작업 진행 중');
+			return;
+		}
+
+		$.ajax({
+			url : "/allago/stock/default.action",
+			method : "GET",
+			success : processResult,
+			error : function(xhr, status, err) {
+				alert('검색 실패 ' + err);
+				isRunning = false;
+			}
+		});
+		isRunning = true;
+	});
+	
+	$('a[id^=compCode]').on('click', function(event) {
+
+		if (isRunning) {
+			alert('이전 작업 진행 중');
+			return;
+		}
+
+		var compCode = $(this).attr('data-id');
+
+		$.ajax({
+			url : "/allago/stock/trend.action",
+			data : {
+				"compCode" : compCode
+			},
+			method : "GET",
+			success : processResult,
+			error : function(xhr, status, err) {
+				alert('검색 실패 ' + err);
+				isRunning = false;
+			}
+		});
+		isRunning = true;
+	});
+
+	function processResult(data, status, xhr) {
+
+		var closePrice = [];
+		var marketDate = [];
+
+		for (var i = 4; i < data.length; i += 5) {
+			closePrice.push(data[i].closePrice);
+			marketDate.push(data[i].marketDate);
+		}
+
+		Highcharts.chart('container2', {
+			chart : {zoomType : 'x'},
+			title : {text : '주식 동향'},
+			subtitle : {text : '2013년 1월 2일-2017년 12월 31일'},
+			xAxis : {
+				title : {
+					text : 'Market Date'
+				},
+				categories : [ '2013', '2014', '2015', '2016', '2017' ],
+				/*tickInterval: 246 */
+				minRange : 246
+			},
+			yAxis : {title : {text : 'Close Price'}},
+			legend : {
+				enabled : false
+			},
+			plotOptions: {
+                area: {
+                    fillColor: {
+                        linearGradient: {
+                            x1: 0,
+                            y1: 0,
+                            x2: 0,
+                            y2: 1
+                        },
+                        stops: [
+                            [0, Highcharts.getOptions().colors[0]],
+                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                        ]
+                    },
+                    marker: {
+                        radius: 2
+                    },
+                    lineWidth: 1,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    threshold: null
+                }
+            },
+			
+            series : [ {
+				type : 'area',
+				name : 'CLOSE PRICE',
+				data : closePrice
+			} ]
+		});
+	}
+	isRunning = false;
+
+});
 </script>
 </head>
 
@@ -431,12 +242,14 @@
 				<div class="col-lg-8">
 					<div class="input-group custom-search-form">
 						<form action="/action_page.php">
-						<p class="page-header">뉴스 기사를 통한 단어 분석 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<input type="text" style="width:400px" placeholder="Search.." name="search">
-							<button type="submit">
-								<i class="fa fa-search"></i>
-							</button>
-						</p>
+							<p class="page-header">
+								뉴스 기사를 통한 단어 분석 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
+									type="text" style="width: 400px" placeholder="Search.."
+									name="search">
+								<button type="submit">
+									<i class="fa fa-search"></i>
+								</button>
+							</p>
 						</form>
 						<!-- <input type="text" class="form-control" placeholder="Search...">
 						<div class="input-group-btn">
@@ -469,7 +282,7 @@
 						<!-- /.panel-heading -->
 						<div class="panel-body">
 							<div class="row">
-								<div class="col-lg-4">
+								<div class="col-lg-3">
 									<div class="table-responsive">
 										<table class="table table-bordered table-hover table-striped">
 											<thead>
@@ -480,42 +293,25 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr>
-													<td>1</td>
-													<td><a id="compCode005930" data-id="005930">삼성전자</a></td>
-													<td>0.8121</td>
-												</tr>
-												<tr>
-													<td>2</td>
-													<td>SK하이닉스</td>
-													<td>0.6121</td>
-												</tr>
-												<tr>
-													<td>3</td>
-													<td>셀트리온</td>
-													<td>0.4121</td>
-												</tr>
-												<tr>
-													<td>4</td>
-													<td>POSCO</td>
-													<td>0.3121</td>
-												</tr>
-												<tr>
-													<td>5</td>
-													<td>삼성물산</td>
-													<td>0.2121</td>
-												</tr>
+												<c:forEach var="stock" items="${ stocks }"
+													varStatus="status">
+													<tr class="active">
+														<td>${ status.index + 1 }</td>
+														<td><a id="default${ stock.compCode }"
+															data-id="${ stock.compCode }"> ${ stock.compName } </a></td>
+														<td>유사값</td>
+												</c:forEach>
 											</tbody>
 										</table>
 									</div>
 									<!-- /.table-responsive -->
 								</div>
-								<!-- /.col-lg-4 (nested) -->
-								<div class="col-lg-8">
+								<!-- /.col-lg-3 (nested) -->
+								<div class="col-lg-9">
 									<div id="container2"
 										style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 								</div>
-								<!-- /.col-lg-8 (nested) -->
+								<!-- /.col-lg-9 (nested) -->
 							</div>
 							<!-- /.row -->
 						</div>
@@ -541,6 +337,9 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="/allago/resources/styles/dist/js/sb-admin-2.js"></script>
+	
+	<!-- Custom Theme JavaScript -->
+	<script src="/allago/resources/styles/js/home.js"></script>
 
 </body>
 

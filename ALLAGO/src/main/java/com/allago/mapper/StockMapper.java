@@ -6,5 +6,6 @@ import com.allago.dto.StockTrend;
 
 public interface StockMapper {
 	
+	public ArrayList<StockTrend> selectStockList();
 	public ArrayList<StockTrend> selectTrendByCompCode(String compCode);
 }

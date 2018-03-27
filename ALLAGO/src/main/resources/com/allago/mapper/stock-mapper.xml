@@ -16,4 +16,11 @@
 		ORDER BY marketDate
 	</select>
 	
+	<select id="selectStockList" resultType="StockTrend">
+		SELECT comp_code as compCode, comp_name as compName, volume, 
+			   market_date as marketDate, close_price as closePrice
+		FROM stock_trend
+		ORDER BY volume DESC
+	</select>
+	
 </mapper>
