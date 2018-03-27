@@ -358,9 +358,10 @@
 					title : {
 						text : 'Market Date'
 					},
-					categories : [ '2013', '2014', '2015', '2016', '2017' ],
+					type : 'datetime',
+					data : marketDate
 					/*tickInterval: 246 */
-					minRange : 246
+//					minRange : 246
 				},
 				yAxis : {title : {text : 'Close Price'}},
 				legend : {

@@ -10,6 +10,7 @@
 		<typeAlias alias="KeySearch" type="com.allago.dto.KeySearch"/>
 		<typeAlias alias="StockMaster" type="com.allago.dto.StockMaster"/>
 		<typeAlias alias="StockTrend" type="com.allago.dto.StockTrend"/>
+		<typeAlias alias="StockTrend2" type="com.allago.dto.StockTrend2"/>
 	</typeAliases>
 
 	<environments default="development">

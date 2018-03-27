@@ -6,14 +6,18 @@
 <!-- 클래스 이름 -->  
 <mapper namespace="com.allago.mapper.StockMapper">
 	
+	<resultMap type="StockTrend2" id="stocklist">
+		<result column="market_date" property="marketDate" typeHandler="com.allago.mapper.AllagoDateTypeHandler" javaType="java.util.Date" jdbcType="CHAR"/>
+		<result column="close_price" property="closePrice"/>
+	</resultMap>
+	
 	<!-- 매서드 이름 -->
 	<select id="selectTrendByCompCode"
-		    parameterType="string" resultType="StockTrend">
-		SELECT comp_code as compCode, comp_name as compName, volume, 
-			   market_date as marketDate, close_price as closePrice
+		    parameterType="string" resultMap="stocklist">
+		SELECT market_date , close_price 
 		FROM stock_trend
 		WHERE comp_code = #{ compCode }
-		ORDER BY marketDate
+		ORDER BY market_date
 	</select>
 	
 </mapper>
