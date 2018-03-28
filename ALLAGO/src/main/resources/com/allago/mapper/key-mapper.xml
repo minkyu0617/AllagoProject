@@ -12,6 +12,7 @@
 		SELECT key_name as keyName, key_count as keyCount, key_date as keyDate
 		FROM key_info
 		WHERE key_name = #{ keyName }
+		ORDER BY key_date ASC
 	</select>
 	
 </mapper>

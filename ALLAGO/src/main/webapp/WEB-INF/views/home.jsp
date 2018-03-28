@@ -37,7 +37,7 @@
 <script src="https://code.highcharts.com/modules/series-label.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script>
-$(function(){
+/* $(function(){
 	var isRunning = false;
 	
 	if (isRunning) {
@@ -118,76 +118,81 @@ $(function(){
 		});
 	}
 });
-
+ */
 $(function() {
 	var isRunning = false;
-
-	Highcharts.chart('container', {
-		title : {
-			text : 'Solar Employment Growth by Sector, 2010-2016'
-		},
-		subtitle : {
-			text : 'Source: thesolarfoundation.com'
-		},
-		yAxis : {
-			title : {
-				text : 'Number of Employees'
+	
+	$('button[id=keySearch]').on('click', function(event) {
+		
+		event.stopPropagation();
+		event.preventDefault();
+		
+		var keyword = $('#search').val();
+		
+		$.ajax({
+			url : "/allago/key/count.action",
+			data : {
+				"keyword" : keyword
+			},
+			method : "GET",
+			success : processResult2,
+			error : function(xhr, status, err) {
+				alert('검색 실패 ' + err);
+				isRunning = false;
 			}
-		},
-		legend : {
-			layout : 'vertical',
-			align : 'right',
-			verticalAlign : 'middle'
-		},
-		plotOptions : {
-			series : {
-				label : {
-					connectorAllowed : false
-				},
-				pointStart : 2010
+		});
+		
+		
+		function processResult2(data, status, xhr) {
+
+			var keyCount = [];
+			
+			for (var i = 0; i < data.length; i++) {
+				keyCount.push(data[i].keyCount);
 			}
-		},
-
-		series : [
-				{
-					name : 'Installation',
-					data : [ 43934, 52503, 57177, 69658, 97031, 119931,
-							137133, 154175 ]
+			
+			Highcharts.chart('container', {
+				title : {
+					text : keyword+' 키워드 연도별 통계 그래프'
 				},
-				{
-					name : 'Manufacturing',
-					data : [ 24916, 24064, 29742, 29851, 32490, 30282,
-							38121, 40434 ]
+				subtitle : {
+					text : '2013년 1월 1일 - 2017년 12월 31일'
 				},
-				{
-					name : 'Sales & Distribution',
-					data : [ 11744, 17722, 16005, 19771, 20185, 24377,
-							32147, 39387 ]
-				},
-				{
-					name : 'Project Development',
-					data : [ null, null, 7988, 12169, 15112, 22452, 34400,
-							34227 ]
-				},
-				{
-					name : 'Other',
-					data : [ 12908, 5948, 8105, 11248, 8989, 11816, 18274,
-							18111 ]
-				} ],
-
-		responsive : {
-			rules : [{
-				condition : {
-					maxWidth : 500
-				},
-				chartOptions : {
-					legend : {
-						layout : 'horizontal',
-						align : 'center',
-						verticalAlign : 'bottom'
+				yAxis : {
+					title : {
+						text : '빈도수'
 					}
+				},
+				plotOptions : {
+					series : {
+						label : {
+							connectorAllowed : false
+						},
+						pointStart : 0
+					}
+				},
+		
+				series : [ {
+					//type : 'area',
+					name : '빈도수',
+					data : keyCount
+				} ],
+		
+				responsive : {
+					rules : [{
+						condition : {
+							maxWidth : 500
+						},
+						chartOptions : {
+							legend : {
+								layout : 'horizontal',
+								align : 'center',
+								verticalAlign : 'bottom'
+							}
+						}
+					}]
 				}
-			}]
+			});
 		}
 	});
 	
@@ -233,9 +238,10 @@ $(function() {
 				title : {
 					text : 'Market Date'
 				},
-				categories : [ '2013', '2014', '2015', '2016', '2017' ],
+				data : marketDate
+				//categories : [ '2013', '2014', '2015', '2016', '2017' ],
 				/*tickInterval: 246 */
-				minRange : 246
+				//minRange : 246
 			},
 			yAxis : {title : {text : 'Close Price'}},
 			legend : {
@@ -304,12 +310,12 @@ $(function() {
 			<div class="row">
 				<div class="col-lg-8">
 					<div class="input-group custom-search-form">
-						<form action="/action_page.php">
-							<p class="page-header">
+						<form>
+							<p style="font-size:15pt" class="page-header">
 								뉴스 기사를 통한 단어 분석 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
 									type="text" style="width: 400px" placeholder="Search.."
-									name="search">
-								<button type="submit">
+									name="search" id="search">
+								<button id="keySearch">
 									<i class="fa fa-search"></i>
 								</button>
 							</p>
@@ -356,8 +362,7 @@ $(function() {
 												</tr>
 											</thead>
 											<tbody>
-												<c:forEach var="stock" items="${ stocks }"
-													varStatus="status">
+												<c:forEach var="stock" items="${ stocks }" varStatus="status">
 													<tr class="active">
 														<td>${ status.index + 1 }</td>
 														<td><a id="default${ stock.compCode }"

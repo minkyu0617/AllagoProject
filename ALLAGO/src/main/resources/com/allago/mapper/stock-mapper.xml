@@ -5,26 +5,45 @@
 
 <!-- 클래스 이름 -->  
 <mapper namespace="com.allago.mapper.StockMapper">
-	
-	<resultMap type="StockTrend2" id="stocklist">
+	<resultMap type="StockTrend" id="stocklist">
 		<result column="market_date" property="marketDate" typeHandler="com.allago.mapper.AllagoDateTypeHandler" javaType="java.util.Date" jdbcType="CHAR"/>
+		<!-- <result column="market_date" property="marketDate"/> -->
 		<result column="close_price" property="closePrice"/>
+		<result column="comp_code" property="compCode"/>
+		<result column="comp_name" property="compName"/>
 	</resultMap>
 	
 	<!-- 매서드 이름 -->
+	<!-- <select id="selectStockList" resultType="StockTrend">
+		SELECT comp_code as compCode, comp_name as compName, volume, 
+			   market_date as marketDate, close_price as closePrice
+		FROM stock_trend
+		ORDER BY volume DESC
+	</select> -->
+	
 	<select id="selectTrendByCompCode"
 		    parameterType="string" resultMap="stocklist">
-		SELECT market_date , close_price 
+		SELECT comp_code, comp_name, volume,
+			   market_date, close_price 
 		FROM stock_trend
 		WHERE comp_code = #{ compCode }
 		ORDER BY market_date
 	</select>
 	
-	<select id="selectStockList" resultType="StockTrend">
-		SELECT comp_code as compCode, comp_name as compName, volume, 
-			   market_date as marketDate, close_price as closePrice
-		FROM stock_trend
-		ORDER BY volume DESC
+	<!-- <select id="selectTrendList" resultMap="stocklist">
+		SELECT comp_code, comp_name, volume,
+			   market_date, close_price 
+		FROM stock_trend ORDER BY market_date, comp_code
+	</select> -->
+	
+	<select id="selectMasterByCompCode"
+		    parameterType="string" resultType="stockMaster">
+		SELECT comp_code, comp_name, sector_code, sector 
+		FROM stock_master
+		WHERE comp_code = #{compCode }
+		ORDER BY market_date
 	</select>
+	
+	<select id=""></select>
 	
 </mapper>
