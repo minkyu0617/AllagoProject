@@ -30,7 +30,7 @@ public class StockController {
 	public String getList(Model model) {
 		ArrayList<StockTrend> stockList = service.getStockList();
 		ArrayList<StockTrend> stockTop5 = new ArrayList<>();
-		for(int i=0; i < 5; i++) {
+		for(int i = 0; i < 5; i++) {
 			stockTop5.add(stockList.get(i));
 		}
 		
@@ -42,6 +42,6 @@ public class StockController {
 	public String getTrend(String compCode, Model model) {
 		ArrayList<StockTrend2> stockTrends = service.getTrendByCompCode(compCode);
 		model.addAttribute("trends", stockTrends);
-		return "home";		
+		return "home";
 	}
 }

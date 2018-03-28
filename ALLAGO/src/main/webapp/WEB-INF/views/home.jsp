@@ -37,6 +37,88 @@
 <script src="https://code.highcharts.com/modules/series-label.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script>
+$(function(){
+	var isRunning = false;
+	
+	if (isRunning) {
+		alert('이전 작업 진행 중');
+		return;
+	}
+	
+	$.ajax({
+		url : "/allago/stock/default.action",
+		method : "GET",
+		success : processResult,
+		error : function(xhr, status, err) {
+			alert('검색 실패 ' + err);
+			isRunning = false;
+		}
+	});
+	isRunning = true;
+	
+	function processResult(data, status, xhr) {
+
+		var closePrice = [];
+		var marketDate = [];
+
+		for (var i = 4; i < data.length; i += 5) {
+			closePrice.push(data[i].closePrice);
+			marketDate.push(data[i].marketDate);
+		}
+
+		Highcharts.chart('container2', {
+			chart : {zoomType : 'x'},
+			title : {text : '주식 동향'},
+			subtitle : {text : '2013년 1월 2일-2017년 12월 31일'},
+			xAxis : {
+				title : {
+					text : 'Market Date'
+				},
+				type : 'datetime',
+				data : marketDate
+				//tickInterval: 246
+				//minRange : 246
+			},
+			yAxis : {title : {text : 'Close Price'}},
+			legend : {
+				enabled : false
+			},
+			plotOptions: {
+                area: {
+                    fillColor: {
+                        linearGradient: {
+                            x1: 0,
+                            y1: 0,
+                            x2: 0,
+                            y2: 1
+                        },
+                        stops: [
+                            [0, Highcharts.getOptions().colors[0]],
+                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                        ]
+                    },
+                    marker: {
+                        radius: 2
+                    },
+                    lineWidth: 1,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    threshold: null
+                }
+            },
+			
+            series : [ {
+				type : 'area',
+				name : 'CLOSE PRICE',
+				data : closePrice
+			} ]
+		});
+	}
+});
+
 $(function() {
 	var isRunning = false;
 
@@ -94,7 +176,7 @@ $(function() {
 				} ],
 
 		responsive : {
-			rules : [ {
+			rules : [{
 				condition : {
 					maxWidth : 500
 				},
@@ -105,93 +187,8 @@ $(function() {
 						verticalAlign : 'bottom'
 					}
 				}
-<<<<<<< HEAD
-			} ]
-=======
-			});
-			isRunning = true;
-		});
-
-		function processResult(data, status, xhr) {
-
-			var closePrice = [];
-			var marketDate = [];
-
-			for (var i = 4; i < data.length; i += 5) {
-				closePrice.push(data[i].closePrice);
-				marketDate.push(data[i].marketDate);
-			}
-
-			Highcharts.chart('container2', {
-				chart : {zoomType : 'x'},
-				title : {text : '주식 동향'},
-				subtitle : {text : '2013년 1월 2일-2017년 12월 31일'},
-				xAxis : {
-					title : {
-						text : 'Market Date'
-					},
-					type : 'datetime',
-					data : marketDate
-					/*tickInterval: 246 */
-//					minRange : 246
-				},
-				yAxis : {title : {text : 'Close Price'}},
-				legend : {
-					enabled : false
-				},
-				plotOptions: {
-	                area: {
-	                    fillColor: {
-	                        linearGradient: {
-	                            x1: 0,
-	                            y1: 0,
-	                            x2: 0,
-	                            y2: 1
-	                        },
-	                        stops: [
-	                            [0, Highcharts.getOptions().colors[0]],
-	                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-	                        ]
-	                    },
-	                    marker: {
-	                        radius: 2
-	                    },
-	                    lineWidth: 1,
-	                    states: {
-	                        hover: {
-	                            lineWidth: 1
-	                        }
-	                    },
-	                    threshold: null
-	                }
-	            },
-				
-	            series : [ {
-					type : 'area',
-					name : 'CLOSE PRICE',
-					data : closePrice
-				} ]
-			});
->>>>>>> branch 'master' of https://github.com/minkyu0617/AllagoProject.git
+			}]
 		}
-	});
-	
-	$(function(){
-		if (isRunning) {
-			alert('이전 작업 진행 중');
-			return;
-		}
-
-		$.ajax({
-			url : "/allago/stock/default.action",
-			method : "GET",
-			success : processResult,
-			error : function(xhr, status, err) {
-				alert('검색 실패 ' + err);
-				isRunning = false;
-			}
-		});
-		isRunning = true;
 	});
 	
 	$('a[id^=compCode]').on('click', function(event) {
@@ -279,7 +276,6 @@ $(function() {
 		});
 	}
 	isRunning = false;
-
 });
 </script>
 </head>
