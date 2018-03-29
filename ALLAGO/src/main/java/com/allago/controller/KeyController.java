@@ -2,7 +2,6 @@ package com.allago.controller;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.allago.dto.KeyInfo;
 import com.allago.dto.StockMaster;
-import com.allago.dto.StockTrend;
 import com.allago.service.KeyService;
 import com.allago.service.StockService;
 
@@ -29,7 +27,7 @@ public class KeyController {
 	@Qualifier("stockService")
 	private StockService stockService;
 	
-	@RequestMapping(value="/count.action", method = RequestMethod.GET, produces="application/json;charset=utf-8")
+	@RequestMapping(value="/count.action", method = RequestMethod.GET)
 	@ResponseBody
 	public ArrayList<KeyInfo> getList(String keyword) {
 		ArrayList<KeyInfo> keyList = keyService.getTrendByKeyword(keyword);
@@ -72,12 +70,24 @@ public class KeyController {
 			
 			info.setKeyCount(info.getKeyCount()+temp.getKeyCount());
 		}
-		
-		//ArrayList<StockMaster> stockMasterList = Compare(keyList);
 		return keyList2;
 	}
 	
-	public ArrayList<StockMaster> Compare(ArrayList<KeyInfo> keyList){
+	@RequestMapping(value="/stockMasterList.action", method = RequestMethod.GET)
+	@ResponseBody
+	public ArrayList<StockMaster> getList2(String keyword) {
+		String [] stockMasters = {"알파", "이세돌", "원유", "인공", "금리"};
+		ArrayList<StockMaster> stockMasterList = new ArrayList<>();
+		
+		for(int i=0; i < stockMasters.length; i++) {
+			if(stockMasters[i].equals(keyword)) {
+				stockMasterList = stockService.getStockMasterTop5(keyword);
+			}
+		}
+		return stockMasterList;
+	}
+	
+	/*public ArrayList<StockMaster> Compare(ArrayList<KeyInfo> keyList){
 		for(KeyInfo k : keyList) {
 			//Calendar d = k.getKeyDate();
 		}
@@ -92,5 +102,5 @@ public class KeyController {
 		ArrayList<StockMaster> stockMasterList = new ArrayList<>(); 
 		stockMasterList.add(stockService.getStockMasterByCompCode(compCode));
 		return stockMasterList;
-	}
+	}*/
 }

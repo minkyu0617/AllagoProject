@@ -37,90 +37,7 @@
 <script src="https://code.highcharts.com/modules/series-label.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script>
-/* $(function(){
-	var isRunning = false;
-	
-	if (isRunning) {
-		alert('이전 작업 진행 중');
-		return;
-	}
-	
-	$.ajax({
-		url : "/allago/stock/default.action",
-		method : "GET",
-		success : processResult,
-		error : function(xhr, status, err) {
-			alert('검색 실패 ' + err);
-			isRunning = false;
-		}
-	});
-	isRunning = true;
-	
-	function processResult(data, status, xhr) {
-
-		var closePrice = [];
-		var marketDate = [];
-
-		for (var i = 4; i < data.length; i += 5) {
-			closePrice.push(data[i].closePrice);
-			marketDate.push(data[i].marketDate);
-		}
-
-		Highcharts.chart('container2', {
-			chart : {zoomType : 'x'},
-			title : {text : '주식 동향'},
-			subtitle : {text : '2013년 1월 2일-2017년 12월 31일'},
-			xAxis : {
-				title : {
-					text : 'Market Date'
-				},
-				type : 'datetime',
-				data : marketDate
-				//tickInterval: 246
-				//minRange : 246
-			},
-			yAxis : {title : {text : 'Close Price'}},
-			legend : {
-				enabled : false
-			},
-			plotOptions: {
-                area: {
-                    fillColor: {
-                        linearGradient: {
-                            x1: 0,
-                            y1: 0,
-                            x2: 0,
-                            y2: 1
-                        },
-                        stops: [
-                            [0, Highcharts.getOptions().colors[0]],
-                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                        ]
-                    },
-                    marker: {
-                        radius: 2
-                    },
-                    lineWidth: 1,
-                    states: {
-                        hover: {
-                            lineWidth: 1
-                        }
-                    },
-                    threshold: null
-                }
-            },
-			
-            series : [ {
-				type : 'area',
-				name : 'CLOSE PRICE',
-				data : closePrice
-			} ]
-		});
-	}
-});
- */
 $(function() {
-	var isRunning = false;
 	
 	$('button[id=keySearch]').on('click', function(event) {
 		
@@ -138,13 +55,11 @@ $(function() {
 			success : processResult2,
 			error : function(xhr, status, err) {
 				alert('검색 실패 ' + err);
-				isRunning = false;
 			}
 		});
-		
-		
+	
 		function processResult2(data, status, xhr) {
-
+	
 			var keyCount = [];
 			
 			for (var i = 0; i < data.length; i++) {
@@ -173,7 +88,6 @@ $(function() {
 				},
 		
 				series : [ {
-					//type : 'area',
 					name : '빈도수',
 					data : keyCount
 				} ],
@@ -195,16 +109,48 @@ $(function() {
 			});
 		}
 	});
+});
+</script>
+<script>	
+$(function() {
 	
-	$('a[id^=compCode]').on('click', function(event) {
-
-		if (isRunning) {
-			alert('이전 작업 진행 중');
-			return;
+	$('button[id=keySearch]').on('click', function(event) {
+		
+		var keyword = $('#search').val();
+		
+		event.stopPropagation();
+		event.preventDefault();
+		
+		$.ajax({
+			url : "/allago/key/stockMasterList.action",
+			data : {
+				"keyword" : keyword
+			},
+			method : "GET",
+			success : processResult3,
+			error : function(xhr, status, err) {
+				alert('검색 실패 ' + err);
+			}
+		});
+	});
+	
+	function processResult3(data, status, xhr) {
+		
+		$('#relation > tr').remove();
+		for(var i = 0; i < 5; i++){
+			$('#relation').append('<td><a id="compCode'+data[i].compCode+'" data-id="'+data[i].compCode+'">'+data[i].compName+'</a></td>');
 		}
+	}
+});	
+</script>
+<script>
+$(function() {
+	
+	$('body').on('click', 'a[id^=compCode]',function(event) {
 
 		var compCode = $(this).attr('data-id');
-
+		var compName = $(this).parent().text();
+		
 		$.ajax({
 			url : "/allago/stock/trend.action",
 			data : {
@@ -214,75 +160,69 @@ $(function() {
 			success : processResult,
 			error : function(xhr, status, err) {
 				alert('검색 실패 ' + err);
-				isRunning = false;
 			}
 		});
-		isRunning = true;
-	});
 
-	function processResult(data, status, xhr) {
-
-		var closePrice = [];
-		var marketDate = [];
-
-		for (var i = 4; i < data.length; i += 5) {
-			closePrice.push(data[i].closePrice);
-			marketDate.push(data[i].marketDate);
-		}
-
-		Highcharts.chart('container2', {
-			chart : {zoomType : 'x'},
-			title : {text : '주식 동향'},
-			subtitle : {text : '2013년 1월 2일-2017년 12월 31일'},
-			xAxis : {
-				title : {
-					text : 'Market Date'
+		function processResult(data, status, xhr) {
+	
+			var closePrice = [];
+			var marketDate = [];
+	
+			for (var i = 0; i < data.length; i++) {
+				closePrice.push(data[i].closePrice);
+				marketDate.push(data[i].marketDate);
+			}
+	
+			Highcharts.chart('container2', {
+				chart : {zoomType : 'x'},
+				title : {text : compName+' 주식 동향'},
+				subtitle : {text : '2013년 1월 2일-2017년 12월 31일'},
+				xAxis : {
+					title : {
+						text : 'Market Date'
+					},
+					data : marketDate
 				},
-				data : marketDate
-				//categories : [ '2013', '2014', '2015', '2016', '2017' ],
-				/*tickInterval: 246 */
-				//minRange : 246
-			},
-			yAxis : {title : {text : 'Close Price'}},
-			legend : {
-				enabled : false
-			},
-			plotOptions: {
-                area: {
-                    fillColor: {
-                        linearGradient: {
-                            x1: 0,
-                            y1: 0,
-                            x2: 0,
-                            y2: 1
-                        },
-                        stops: [
-                            [0, Highcharts.getOptions().colors[0]],
-                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                        ]
-                    },
-                    marker: {
-                        radius: 2
-                    },
-                    lineWidth: 1,
-                    states: {
-                        hover: {
-                            lineWidth: 1
-                        }
-                    },
-                    threshold: null
-                }
-            },
-			
-            series : [ {
-				type : 'area',
-				name : 'CLOSE PRICE',
-				data : closePrice
-			} ]
-		});
-	}
-	isRunning = false;
-});
+				yAxis : {title : {text : 'Close Price'}},
+				legend : {
+					enabled : false
+				},
+				plotOptions: {
+	                area: {
+	                    fillColor: {
+	                        linearGradient: {
+	                            x1: 0,
+	                            y1: 0,
+	                            x2: 0,
+	                            y2: 1
+	                        },
+	                        stops: [
+	                            [0, Highcharts.getOptions().colors[0]],
+	                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+	                        ]
+	                    },
+	                    marker: {
+	                        radius: 2
+	                    },
+	                    lineWidth: 1,
+	                    states: {
+	                        hover: {
+	                            lineWidth: 1
+	                        }
+	                    },
+	                    threshold: null
+	                }
+	            },
+				
+	            series : [ {
+					type : 'area',
+					name : 'CLOSE PRICE',
+					data : closePrice
+				} ]
+			});
+		}
+	});
+});		
 </script>
 </head>
 
@@ -318,6 +258,9 @@ $(function() {
 								<button id="keySearch">
 									<i class="fa fa-search"></i>
 								</button>
+								<table class="table table-bordered table-hover table-striped">
+									<tr id="relation"></tr>
+								</table>
 							</p>
 						</form>
 						<!-- <input type="text" class="form-control" placeholder="Search...">
@@ -351,35 +294,11 @@ $(function() {
 						<!-- /.panel-heading -->
 						<div class="panel-body">
 							<div class="row">
-								<div class="col-lg-3">
-									<div class="table-responsive">
-										<table class="table table-bordered table-hover table-striped">
-											<thead>
-												<tr>
-													<th>순위</th>
-													<th>주식 종목</th>
-													<th>상관계수</th>
-												</tr>
-											</thead>
-											<tbody>
-												<c:forEach var="stock" items="${ stocks }" varStatus="status">
-													<tr class="active">
-														<td>${ status.index + 1 }</td>
-														<td><a id="default${ stock.compCode }"
-															data-id="${ stock.compCode }"> ${ stock.compName } </a></td>
-														<td>유사값</td>
-												</c:forEach>
-											</tbody>
-										</table>
-									</div>
-									<!-- /.table-responsive -->
-								</div>
-								<!-- /.col-lg-3 (nested) -->
-								<div class="col-lg-9">
+								<div class="col-lg-12">
 									<div id="container2"
 										style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 								</div>
-								<!-- /.col-lg-9 (nested) -->
+								<!-- /.col-lg-12 (nested) -->
 							</div>
 							<!-- /.row -->
 						</div>

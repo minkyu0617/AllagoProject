@@ -34,8 +34,35 @@ public class StockDao {
 		return stockTrends;
 	}
 
-	public StockMaster selectMasterByCompCode(String compCode) {
+	/*public StockMaster selectMasterByCompCode(String compCode) {
 		StockMaster stockMaster = stockMapper.selectMasterByCompCode(compCode);
 		return stockMaster;
+	}*/
+
+	public ArrayList<StockMaster> selectMasterList(String keyword) {
+		ArrayList<StockMaster> stockMasters = new ArrayList<>();
+		//ArrayList<String> stockName = new ArrayList<>();
+		String [] stockName = new String [5];
+		if(keyword.equals("알파") || keyword.equals("인공") || keyword.equals("이세돌")) {
+			for(int i=0; i< stockName.length; i++) {
+				String [] names = {"삼성전자", "SK하이닉스", "신성이엔지", "일진디스플", "DB하이텍"};
+				stockName[i]= names[i];
+			}
+		} else if(keyword.equals("금리")) {
+			for(int i=0; i< stockName.length; i++) {
+				String [] names = {"KB금융", "신한지주", "기업은행", "우리은행", "한국금융지주"};
+				stockName[i]= names[i];
+			}
+		} else if(keyword.equals("원유")) {
+			for(int i=0; i< stockName.length; i++) {
+				String [] names = {"SK이노베이션", "S-Oil", "GS", "금호석유", "효성"};
+				stockName[i]= names[i];
+			}
+		}
+		
+		for(int i=0; i < stockName.length; i++) {
+			stockMasters.add(stockMapper.selectMasterByCompName(stockName[i]));	
+		}
+		return stockMasters;
 	}
 }

@@ -8,7 +8,7 @@ import lombok.Data;
 public class StockTrend {
 	String compCode;
 	String compName;
-	Date marketDate;
+	String marketDate;
 	int volume;
 	int closePrice;
 }

@@ -6,8 +6,8 @@
 <!-- 클래스 이름 -->  
 <mapper namespace="com.allago.mapper.StockMapper">
 	<resultMap type="StockTrend" id="stocklist">
-		<result column="market_date" property="marketDate" typeHandler="com.allago.mapper.AllagoDateTypeHandler" javaType="java.util.Date" jdbcType="CHAR"/>
-		<!-- <result column="market_date" property="marketDate"/> -->
+		<!-- <result column="market_date" property="marketDate" typeHandler="com.allago.mapper.AllagoDateTypeHandler" javaType="java.util.Date" jdbcType="CHAR"/> -->
+		<result column="market_date" property="marketDate"/>
 		<result column="close_price" property="closePrice"/>
 		<result column="comp_code" property="compCode"/>
 		<result column="comp_name" property="compName"/>
@@ -36,14 +36,19 @@
 		FROM stock_trend ORDER BY market_date, comp_code
 	</select> -->
 	
-	<select id="selectMasterByCompCode"
-		    parameterType="string" resultType="stockMaster">
+	<!-- <select id="selectMasterByCompCode"
+		    parameterType="string" resultType="StockMaster">
 		SELECT comp_code, comp_name, sector_code, sector 
 		FROM stock_master
 		WHERE comp_code = #{compCode }
 		ORDER BY market_date
-	</select>
+	</select> -->
 	
-	<select id=""></select>
+	<select id="selectMasterByCompName"
+		    parameterType="string" resultType="StockMaster">
+		SELECT comp_code as compCode, comp_name as compName, "sector_code" as sectorCode, sector
+		FROM stock_master
+		WHERE comp_name = #{ compName }
+	</select>
 	
 </mapper>

@@ -34,8 +34,13 @@ public class StockService {
 		return stockTrends;
 	}
 
-	public StockMaster getStockMasterByCompCode(String compCode) {
+	/*public StockMaster getStockMasterByCompCode(String compCode) {
 		StockMaster stockMaster = dao.selectMasterByCompCode(compCode);
 		return stockMaster;
+	}*/
+
+	public ArrayList<StockMaster> getStockMasterTop5(String keyword) {
+		ArrayList<StockMaster> stockMasters = dao.selectMasterList(keyword);
+		return stockMasters;
 	}
 }
