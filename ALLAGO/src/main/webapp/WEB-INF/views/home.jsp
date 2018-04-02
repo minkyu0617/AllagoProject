@@ -218,7 +218,7 @@ $(function() {
 	
 	function processResult3(data, status, xhr) {
 		
-		$('#relation > tr').remove();
+		$('tr#relation').empty();
 		for(var i = 0; i < 5; i++){
 			$('#relation').append('<td><a id="compCode'+data[i].compCode+'" data-id="'+data[i].compCode+'">'+data[i].compName+'</a></td>');
 		}

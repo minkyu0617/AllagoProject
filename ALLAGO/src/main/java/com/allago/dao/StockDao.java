@@ -42,22 +42,27 @@ public class StockDao {
 	public ArrayList<StockMaster> selectMasterList(String keyword) {
 		ArrayList<StockMaster> stockMasters = new ArrayList<>();
 		//ArrayList<String> stockName = new ArrayList<>();
-		String [] stockName = new String [5];
+		String [] stockName = null;//new String [5];
+		
 		if(keyword.equals("알파") || keyword.equals("인공") || keyword.equals("이세돌")) {
-			for(int i=0; i< stockName.length; i++) {
-				String [] names = {"삼성전자", "SK하이닉스", "신성이엔지", "일진디스플", "DB하이텍"};
-				stockName[i]= names[i];
-			}
+			//for(int i=0; i< stockName.length; i++) {
+			//	String [] names = {"삼성전자", "SK하이닉스", "신성이엔지", "일진디스플", "DB하이텍"};
+			//	stockName[i]= names[i];
+			//}
+			stockName = new String[]{"삼성전자", "SK하이닉스", "신성이엔지", "일진디스플", "DB하이텍"};
 		} else if(keyword.equals("금리")) {
-			for(int i=0; i< stockName.length; i++) {
-				String [] names = {"KB금융", "신한지주", "기업은행", "우리은행", "한국금융지주"};
-				stockName[i]= names[i];
-			}
+			//for(int i=0; i< stockName.length; i++) {
+			//	String [] names = {"KB금융", "신한지주", "기업은행", "우리은행", "한국금융지주"};
+			//	stockName[i]= names[i];
+			//}
+			
+			stockName = new String[]{"KB금융", "신한지주", "기업은행", "우리은행", "한국금융지주"};
 		} else if(keyword.equals("원유")) {
-			for(int i=0; i< stockName.length; i++) {
-				String [] names = {"SK이노베이션", "S-Oil", "GS", "금호석유", "효성"};
-				stockName[i]= names[i];
-			}
+			//for(int i=0; i< stockName.length; i++) {
+			//	String [] names = {"SK이노베이션", "S-Oil", "GS", "금호석유", "효성"};
+			//	stockName[i]= names[i];
+			//}
+			stockName = new String[]{"SK이노베이션", "S-Oil", "GS", "금호석유화학", "효성"};
 		}
 		
 		for(int i=0; i < stockName.length; i++) {
